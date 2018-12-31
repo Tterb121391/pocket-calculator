@@ -1,5 +1,6 @@
 var output = "";
 var calc = "";
+var operations = [];
 
 function buttonNum0() {
   let p = document.getElementById("output");
@@ -65,28 +66,31 @@ function add() {
   let p = document.getElementById("output");
   output = output + "+";
   p.innerHTML = output;
+  operations.push("+");
 }
 
 function subtract() {
   let p = document.getElementById("output");
   output = output + "-";
   p.innerHTML = output;
+  operations.push("-");
 }
 
 function multiply() {
   let p = document.getElementById("output");
   output = output + "x";
   p.innerHTML = output;
+  operations.push("x");
 }
 
 function divide() {
   let p = document.getElementById("output");
   output = output + "/";
   p.innerHTML = output;
+  operations.push("/");
 }
 
 function equals() {
   let p = document.getElementById("output");
-  calc = Number(output);
-  console.log(calc);
+  p.innerHTML = calc;
 }
