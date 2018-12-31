@@ -1,4 +1,5 @@
 var output = "";
+var calc = "";
 
 function buttonNum0() {
   let p = document.getElementById("output");
@@ -61,17 +62,31 @@ function buttonNum9() {
 }
 
 function add() {
-
+  let p = document.getElementById("output");
+  output = output + "+";
+  p.innerHTML = output;
 }
 
 function subtract() {
-
+  let p = document.getElementById("output");
+  output = output + "-";
+  p.innerHTML = output;
 }
 
 function multiply() {
-
+  let p = document.getElementById("output");
+  output = output + "x";
+  p.innerHTML = output;
 }
 
 function divide() {
+  let p = document.getElementById("output");
+  output = output + "/";
+  p.innerHTML = output;
+}
 
+function equals() {
+  let p = document.getElementById("output");
+  calc = Number(output);
+  console.log(calc);
 }
