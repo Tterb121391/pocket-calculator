@@ -4,11 +4,13 @@
   <head>
     <link rel="stylesheet" type="text/css" href="pocket-calculator.css"/>
     <script type="text/javascript" src="pocket-calculator.js"></script>
-    <title class = "title">Calculator</title>
+    <title>Calculator</title>
   </head>
   <body>
-    <p id = "output"></p>
-    <button class = "button" id = "button-num-0" onclick = "buttonNum0();">0</button>
+    <p id = "output">0</p>
+    <button class = "button" id = "button-clear" onclick = "clearing();">AC</button>
+    <button class = "button" id = "button-negation" onclick = "negation();">+/-</button>
+    <button class = "button" id = "button-percentage" onclick = "percentage();">%</button>
     <button class = "button" id = "button-num-1" onclick = "buttonNum1();">1</button>
     <button class = "button" id = "button-num-2" onclick = "buttonNum2();">2</button>
     <button class = "button" id = "button-num-3" onclick = "buttonNum3();">3</button>
@@ -18,6 +20,8 @@
     <button class = "button" id = "button-num-7" onclick = "buttonNum7();">7</button>
     <button class = "button" id = "button-num-8" onclick = "buttonNum8();">8</button>
     <button class = "button" id = "button-num-9" onclick = "buttonNum9();">9</button>
+    <button class = "button" id = "button-num-0" onclick = "buttonNum0();">0</button>
+    <button class = "button" id = "button-decimal" onclick = "decimal();">.</button>
     <button class = "button" id = "button-add" onclick = "add();">+</button>
     <button class = "button" id = "button-subtract" onclick = "subtract();">-</button>
     <button class = "button" id = "button-multiply" onclick = "multiply();">x</button>

@@ -1,8 +1,40 @@
 var output = "";
 var calc = "";
 var operations = [];
-var answers = [];
-document.getElementById("output").innerHTML = "0";
+var answer;
+
+function clearing() {
+  let p = document.getElementById("output");
+  p.innerHTML = "0";
+  answer = "";
+  output = "";
+  operations = [];
+}
+
+function negation() {
+  let p = document.getElementById("output");
+  for(let w = 0; w <= operations.length; w++) {
+    if((Number.isNaN(Number(operations[w - 1])) == false || operations[w - 1] === ".") && (Number.isNaN(Number(operations[w])) == false || operations[w] === ".")) {
+      if(operations[w] === ".") {
+        operations.splice(w - 1, 0, operations[w - 1] + operations[w]);
+      } else {
+        operations.splice(w - 1, 0, Number(operations[w - 1] + operations[w]));
+      }
+      operations.splice(w, 2);
+      w--;
+    }
+  }
+  if(Number.isNaN(Number(operations[operations.length - 1])) == false) {
+    operations.splice(operations.length - 1, 0, operations[operations.length - 1] * -1);
+    operations.splice(operations.length - 1, 1);
+    output = operations.join("");
+    p.innerHTML = output;
+  }
+}
+
+function percentage() {
+
+}
 
 function buttonNum0() {
   let p = document.getElementById("output");
@@ -74,6 +106,13 @@ function buttonNum9() {
   operations.push("9");
 }
 
+function decimal() {
+  let p = document.getElementById("output");
+  output = output + ".";
+  p.innerHTML = output;
+  operations.push(".");
+}
+
 function add() {
   let p = document.getElementById("output");
   output = output + "+";
@@ -106,18 +145,15 @@ function equals() {
   let p = document.getElementById("output");
   for(let x = 0; x <= operations.length; x++) {
     if((Number.isNaN(Number(operations[x - 1])) == false || operations[x - 1] === ".") && (Number.isNaN(Number(operations[x])) == false || operations[x] === ".")) {
-      operations.splice(x - 1, 0, Number(operations[x - 1] + operations[x]));
+      if(operations[x] === ".") {
+        operations.splice(x - 1, 0, operations[x - 1] + operations[x]);
+      } else {
+        operations.splice(x - 1, 0, Number(operations[x - 1] + operations[x]));
+      }
       operations.splice(x, 2);
+      x--;
     }
   }
-  // let num;
-  // for(let y = 0; y <= operations.length; y++) {
-  //   if(operations[y] !== ("+" || "-" || "x" || "/")) {
-  //     num = operations[y];
-  //     num = Number(num);
-  //     operations.splice(y, 1, num);
-  //   }
-  // }
   for(let z = 0; z <= operations.length; z++) {
     if(operations[z] === "x") {
       operations.splice(z - 1, 0, operations[z - 1] * operations[z + 1]);
@@ -127,7 +163,22 @@ function equals() {
       operations.splice(z, 3);
     }
   }
+  for(let a = 0; a <= operations.length; a++) {
+    if(operations[a] === "+") {
+      operations.splice(a - 1, 0, operations[a - 1] + operations[a + 1]);
+      operations.splice(a, 3);
+    } else if(operations[a] === "-") {
+      operations.splice(a - 1, 0, operations[a - 1] - operations[a + 1]);
+      operations.splice(a, 3);
+    }
+  }
   calc = operations[0];
-  p.innerHTML = calc;
-  answers.push(calc);
+  if(Number.isNaN(calc) == true) {
+    p.innerHTML = "Error";
+  } else {
+    p.innerHTML = calc;
+    answer = calc;
+    output = answer;
+  }
+  operations = [];
 }
