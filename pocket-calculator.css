@@ -1,3 +1,14 @@
-#buttonNum1{
+.grid-item{
+  border-radius: 50px;
+}
 
+.calculator {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.display-bar {
+  grid-column-start: 1;
+  grid-column-end: 5;
 }

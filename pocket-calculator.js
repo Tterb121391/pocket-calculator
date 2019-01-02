@@ -15,7 +15,7 @@ function negation() {
   let p = document.getElementById("output");
   for(let w = 0; w <= operations.length; w++) {
     if((Number.isNaN(Number(operations[w - 1])) == false || operations[w - 1] === ".") && (Number.isNaN(Number(operations[w])) == false || operations[w] === ".")) {
-      if(operations[w] === ".") {
+      if(operations[w] === "." || operations[w - 1] === ".") {
         operations.splice(w - 1, 0, operations[w - 1] + operations[w]);
       } else {
         operations.splice(w - 1, 0, Number(operations[w - 1] + operations[w]));
@@ -33,7 +33,24 @@ function negation() {
 }
 
 function percentage() {
-
+  let p = document.getElementById("output");
+  for(let v = 0; v <= operations.length; v++) {
+    if((Number.isNaN(Number(operations[v - 1])) == false || operations[v - 1] === ".") && (Number.isNaN(Number(operations[v])) == false || operations[v] === ".")) {
+      if(operations[v] === "." || operations[v - 1] === ".") {
+        operations.splice(v - 1, 0, operations[v - 1] + operations[w]);
+      } else {
+        operations.splice(v - 1, 0, Number(operations[v - 1] + operations[v]));
+      }
+      operations.splice(v, 2);
+      v--;
+    }
+  }
+  if(Number.isNaN(Number(operations[operations.length - 1])) == false) {
+    operations.splice(operations.length - 1, 0, operations[operations.length - 1] * 0.01);
+    operations.splice(operations.length - 1, 1);
+    output = operations.join("");
+    p.innerHTML = output;
+  }
 }
 
 function buttonNum0() {
@@ -145,7 +162,7 @@ function equals() {
   let p = document.getElementById("output");
   for(let x = 0; x <= operations.length; x++) {
     if((Number.isNaN(Number(operations[x - 1])) == false || operations[x - 1] === ".") && (Number.isNaN(Number(operations[x])) == false || operations[x] === ".")) {
-      if(operations[x] === ".") {
+      if(operations[x] === "." || operations[x - 1] === ".") {
         operations.splice(x - 1, 0, operations[x - 1] + operations[x]);
       } else {
         operations.splice(x - 1, 0, Number(operations[x - 1] + operations[x]));
@@ -165,7 +182,7 @@ function equals() {
   }
   for(let a = 0; a <= operations.length; a++) {
     if(operations[a] === "+") {
-      operations.splice(a - 1, 0, operations[a - 1] + operations[a + 1]);
+      operations.splice(a - 1, 0, Number(operations[a - 1]) + Number(operations[a + 1]));
       operations.splice(a, 3);
     } else if(operations[a] === "-") {
       operations.splice(a - 1, 0, operations[a - 1] - operations[a + 1]);
@@ -180,5 +197,6 @@ function equals() {
     answer = calc;
     output = answer;
   }
-  operations = [];
+  // operations = [];
+  console.log(operations);
 }
