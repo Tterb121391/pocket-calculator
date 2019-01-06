@@ -12,3 +12,7 @@
   grid-column-start: 1;
   grid-column-end: 5;
 }
+
+#operator:target {
+  background-color: orange;
+}

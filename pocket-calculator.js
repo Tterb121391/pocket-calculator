@@ -19,12 +19,12 @@ function negate() {
     num = Number(num) * -1;
     let lastChar = output[output.length - 1];
     num = String(num);
-    for(let b = output.length; b > 0; b--) {
+    for(let c = output.length; c > 0; c--) {
       if(lastChar === ("+" || "-" || "x" || "/")) {
         break;
       } else {
-        output = output.slice(0, b - 2);
-        lastChar = output[b - 1];
+        output = output.slice(0, c - 2);
+        lastChar = output[c - 1];
       }
     }
     output = output + num;
@@ -54,15 +54,54 @@ function percentage() {
 function buttonNum0() {
   let p = document.getElementById("output");
   output = output + "0";
-  p.innerHTML = output;
   num = num + "0";
+  if(Number(num) < 1000000000) {
+    let r;
+    for(r = 0; r < output.length; r++) {
+      if(output[r] === ",") {
+        output = output.substring(0, r) + output.substring(r + 1);
+        r--;
+      } else if(output[r] === ".") {
+        break;
+      }
+    }
+    if(r > 3) {
+      for(let s = r - 3; s > 0; s -= 3) {
+        output = output.substring(0, s) + "," + output.substring(s);
+      }
+    }
+  } else {
+    for(let j = 9; true; j++) {
+      let coefficient = Number(num) / 10**j;
+      if(coefficient >= 1 && coefficient < 10) {
+        output = String(coefficient) + "e" + String(j);
+      }
+    }
+  }
+  p.innerHTML = output;
 }
 
 function buttonNum1() {
   let p = document.getElementById("output");
   output = output + "1";
-  p.innerHTML = output;
   num = num + "1";
+  if(Number(num) < 1000000000) {
+    let r;
+    for(r = 0; r < output.length; r++) {
+      if(output[r] === ",") {
+        output = output.substring(0, r) + output.substring(r + 1);
+        r--;
+      } else if(output[r] === ".") {
+        break;
+      }
+    }
+    if(r > 3) {
+      for(let s = r - 3; s > 0; s -= 3) {
+        output = output.substring(0, s) + "," + output.substring(s);
+      }
+    }
+  }
+  p.innerHTML = output;
 }
 
 function buttonNum2() {
@@ -129,74 +168,91 @@ function decimal() {
 }
 
 function add() {
-  let p = document.getElementById("output");
-  output = output + "+";
-  p.innerHTML = output;
-  operations.push(Number(num));
+  if(operations[operations.length - 1] === ("+" || "-" || "x" || "/")) {
+    operations.splice(operations.length - 1, 1);
+  } else {
+    operations.push(num);
+  }
   operations.push("+");
   num = "";
+  output = "";
 }
 
 function subtract() {
-  let p = document.getElementById("output");
-  output = output + "-";
-  p.innerHTML = output;
-  operations.push(Number(num));
+  if(operations[operations.length - 1] === ("+" || "-" || "x" || "/")) {
+    operations.splice(operations.length - 1, 1);
+  } else {
+    operations.push(num);
+  }
   operations.push("-");
   num = "";
+  output = "";
 }
 
 function multiply() {
-  let p = document.getElementById("output");
-  output = output + "x";
-  p.innerHTML = output;
-  operations.push(Number(num));
+  if(operations[operations.length - 1] === ("+" || "-" || "x" || "/")) {
+    operations.splice(operations.length - 1, 1);
+  } else {
+    operations.push(num);
+  }
   operations.push("x");
   num = "";
+  output = "";
 }
 
 function divide() {
-  let p = document.getElementById("output");
-  output = output + "/";
-  p.innerHTML = output;
-  operations.push(Number(num));
+  if(operations[operations.length - 1] === ("+" || "-" || "x" || "/")) {
+    operations.splice(operations.length - 1, 1);
+  } else {
+    operations.push(num);
+  }
   operations.push("/");
   num = "";
+  output = "";
 }
 
 function equals() {
-  operations.push(Number(num));
   let p = document.getElementById("output");
-  for(let z = 0; z <= operations.length; z++) {
-    if(operations[z] === "x") {
-      operations.splice(z - 1, 0, Number(operations[z - 1]) * Number(operations[z + 1]));
-      operations.splice(z, 3);
-    } else if(operations[z] === "/") {
-      operations.splice(z - 1, 0, Number(operations[z - 1]) / Number(operations[z + 1]));
-      operations.splice(z, 3);
-    }
-  }
-  for(let a = 0; a <= operations.length; a++) {
-    if(operations[a] === "+") {
-      operations.splice(a - 1, 0, Number(operations[a - 1]) + Number(operations[a + 1]));
-      operations.splice(a, 3);
-    } else if(operations[a] === "-") {
-      operations.splice(a - 1, 0, Number(operations[a - 1]) - Number(operations[a + 1]));
-      operations.splice(a, 3);
-    }
-  }
-  calc = operations[0];
-  if(Number.isNaN(calc) == true || calc === Infinity) {
+  if(operations[operations.length - 1] === ("+" || "-" || "x" || "/")) {
     p.innerHTML = "Error";
   } else {
-    p.innerHTML = calc;
-    answer = calc;
-    output = answer;
+    operations.push(num);
+    for(let z = 0; z <= operations.length; z++) {
+      if(operations[z] === "x") {
+        operations.splice(z - 1, 0, Number(operations[z - 1]) * Number(operations[z + 1]));
+        operations.splice(z, 3);
+        z--;
+      } else if(operations[z] === "/") {
+        operations.splice(z - 1, 0, Number(operations[z - 1]) / Number(operations[z + 1]));
+        operations.splice(z, 3);
+        z--;
+      }
+    }
+    for(let a = 0; a <= operations.length; a++) {
+      if(operations[a] === "+") {
+        operations.splice(a - 1, 0, Number(operations[a - 1]) + Number(operations[a + 1]));
+        operations.splice(a, 3);
+        a--;
+      } else if(operations[a] === "-") {
+        operations.splice(a - 1, 0, Number(operations[a - 1]) - Number(operations[a + 1]));
+        operations.splice(a, 3);
+        a--;
+      }
+    }
+    calc = operations[0];
+    if(Number.isNaN(calc) == true || calc === Infinity) {
+      p.innerHTML = "Error";
+    } else {
+      p.innerHTML = calc;
+      answer = calc;
+      output = answer;
+    }
   }
-  operations = [];
-  num = "";
+  // operations = [];
+  // num = "";
 }
 
 function showList() {
   console.log(operations);
+  console.log(calc);
 }
