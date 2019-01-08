@@ -69,83 +69,103 @@ function commaDelimit() {
 }
 
 function buttonNum0() {
-  let p = document.getElementById("output");
-  output = output + "0";
-  num = num + "0";
-  commaDelimit();
-  p.innerHTML = output;
+  if(num.length <= 8) {
+    let p = document.getElementById("output");
+    output = output + "0";
+    num = num + "0";
+    commaDelimit();
+    p.innerHTML = output;
+  }
 }
 
 function buttonNum1() {
-  let p = document.getElementById("output");
-  output = output + "1";
-  num = num + "1";
-  commaDelimit();
-  p.innerHTML = output;
+  if(num.length <= 8) {
+    let p = document.getElementById("output");
+    output = output + "1";
+    num = num + "1";
+    commaDelimit();
+    p.innerHTML = output;
+  }
 }
 
 function buttonNum2() {
-  let p = document.getElementById("output");
-  output = output + "2";
-  num = num + "2";
-  commaDelimit();
-  p.innerHTML = output;
+  if(num.length <= 8) {
+    let p = document.getElementById("output");
+    output = output + "2";
+    num = num + "2";
+    commaDelimit();
+    p.innerHTML = output;
+  }
 }
 
 function buttonNum3() {
-  let p = document.getElementById("output");
-  output = output + "3";
-  num = num + "3";
-  commaDelimit();
-  p.innerHTML = output;
+  if(num.length <= 8) {
+    let p = document.getElementById("output");
+    output = output + "3";
+    num = num + "3";
+    commaDelimit();
+    p.innerHTML = output;
+  }
 }
 
 function buttonNum4() {
-  let p = document.getElementById("output");
-  output = output + "4";
-  num = num + "4";
-  commaDelimit();
-  p.innerHTML = output;
+  if(num.length <= 8) {
+    let p = document.getElementById("output");
+    output = output + "4";
+    num = num + "4";
+    commaDelimit();
+    p.innerHTML = output;
+  }
 }
 
 function buttonNum5() {
-  let p = document.getElementById("output");
-  output = output + "5";
-  num = num + "5";
-  commaDelimit();
-  p.innerHTML = output;
+  if(num.length <= 8) {
+    let p = document.getElementById("output");
+    output = output + "5";
+    num = num + "5";
+    commaDelimit();
+    p.innerHTML = output;
+  }
 }
 
 function buttonNum6() {
-  let p = document.getElementById("output");
-  output = output + "6";
-  num = num + "6";
-  commaDelimit();
-  p.innerHTML = output;
+  if(num.length <= 8) {
+    let p = document.getElementById("output");
+    output = output + "6";
+    num = num + "6";
+    commaDelimit();
+    p.innerHTML = output;
+  }
 }
 
 function buttonNum7() {
-  let p = document.getElementById("output");
-  output = output + "7";
-  num = num + "7";
-  commaDelimit();
-  p.innerHTML = output;
+  if(num.length <= 8) {
+    let p = document.getElementById("output");
+    output = output + "7";
+    num = num + "7";
+    commaDelimit();
+    p.innerHTML = output;
+  }
 }
 
 function buttonNum8() {
-  let p = document.getElementById("output");
-  output = output + "8";
-  num = num + "8";
-  commaDelimit();
-  p.innerHTML = output;
+  if(num.length <= 8) {
+    let p = document.getElementById("output");
+    output = output + "8";
+    num = num + "8";
+    commaDelimit();
+    p.innerHTML = output;
+  }
 }
 
 function buttonNum9() {
-  let p = document.getElementById("output");
-  output = output + "9";
-  num = num + "9";
-  commaDelimit();
-  p.innerHTML = output;
+  if(num.length <= 8) {
+    let p = document.getElementById("output");
+    output = output + "9";
+    num = num + "9";
+    commaDelimit();
+    p.innerHTML = output;
+  }
 }
 
 function decimal() {
@@ -242,7 +262,7 @@ function equals() {
           coefficient = answer / 10**n;
           degree = n;
         }
-        output = String(coefficient) + "e" + String(degree);
+        output = String(coefficient.toFixed(5)) + "e" + String(degree);
       }
       p.innerHTML = output;
     }
