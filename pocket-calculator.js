@@ -51,33 +51,28 @@ function percentage() {
   }
 }
 
+function commaDelimit() {
+  let r;
+  for(r = 0; r < output.length; r++) {
+    if(output[r] === ",") {
+      output = output.substring(0, r) + output.substring(r + 1);
+      r--;
+    } else if(output[r] === ".") {
+        break;
+    }
+  }
+  if(r > 3) {
+    for(let s = r - 3; s > 0; s -= 3) {
+      output = output.substring(0, s) + "," + output.substring(s);
+    }
+  }
+}
+
 function buttonNum0() {
   let p = document.getElementById("output");
   output = output + "0";
   num = num + "0";
-  if(Number(num) < 1000000000) {
-    let r;
-    for(r = 0; r < output.length; r++) {
-      if(output[r] === ",") {
-        output = output.substring(0, r) + output.substring(r + 1);
-        r--;
-      } else if(output[r] === ".") {
-        break;
-      }
-    }
-    if(r > 3) {
-      for(let s = r - 3; s > 0; s -= 3) {
-        output = output.substring(0, s) + "," + output.substring(s);
-      }
-    }
-  } else {
-    for(let j = 9; true; j++) {
-      let coefficient = Number(num) / 10**j;
-      if(coefficient >= 1 && coefficient < 10) {
-        output = String(coefficient) + "e" + String(j);
-      }
-    }
-  }
+  commaDelimit();
   p.innerHTML = output;
 }
 
@@ -85,79 +80,72 @@ function buttonNum1() {
   let p = document.getElementById("output");
   output = output + "1";
   num = num + "1";
-  if(Number(num) < 1000000000) {
-    let r;
-    for(r = 0; r < output.length; r++) {
-      if(output[r] === ",") {
-        output = output.substring(0, r) + output.substring(r + 1);
-        r--;
-      } else if(output[r] === ".") {
-        break;
-      }
-    }
-    if(r > 3) {
-      for(let s = r - 3; s > 0; s -= 3) {
-        output = output.substring(0, s) + "," + output.substring(s);
-      }
-    }
-  }
+  commaDelimit();
   p.innerHTML = output;
 }
 
 function buttonNum2() {
   let p = document.getElementById("output");
   output = output + "2";
-  p.innerHTML = output;
   num = num + "2";
+  commaDelimit();
+  p.innerHTML = output;
 }
 
 function buttonNum3() {
   let p = document.getElementById("output");
   output = output + "3";
-  p.innerHTML = output;
   num = num + "3";
+  commaDelimit();
+  p.innerHTML = output;
 }
 
 function buttonNum4() {
   let p = document.getElementById("output");
   output = output + "4";
-  p.innerHTML = output;
   num = num + "4";
+  commaDelimit();
+  p.innerHTML = output;
 }
 
 function buttonNum5() {
   let p = document.getElementById("output");
   output = output + "5";
-  p.innerHTML = output;
   num = num + "5";
+  commaDelimit();
+  p.innerHTML = output;
 }
 
 function buttonNum6() {
   let p = document.getElementById("output");
   output = output + "6";
-  p.innerHTML = output;
   num = num + "6";
+  commaDelimit();
+  p.innerHTML = output;
 }
 
 function buttonNum7() {
   let p = document.getElementById("output");
   output = output + "7";
-  p.innerHTML = output;
   num = num + "7";
+  commaDelimit();
+  p.innerHTML = output;
 }
 
 function buttonNum8() {
   let p = document.getElementById("output");
   output = output + "8";
-  p.innerHTML = output;
   num = num + "8";
+  commaDelimit();
+  p.innerHTML = output;
 }
 
 function buttonNum9() {
   let p = document.getElementById("output");
   output = output + "9";
-  p.innerHTML = output;
   num = num + "9";
+  commaDelimit();
+  p.innerHTML = output;
 }
 
 function decimal() {
@@ -243,13 +231,24 @@ function equals() {
     if(Number.isNaN(calc) == true || calc === Infinity) {
       p.innerHTML = "Error";
     } else {
-      p.innerHTML = calc;
       answer = calc;
-      output = answer;
+      output = String(answer);
+      if(answer < 1000000000) {
+        commaDelimit();
+      } else {
+        let coefficient = 0;
+        let degree;
+        for(let n = 9; coefficient < 1 || coefficient >= 10; n++) {
+          coefficient = answer / 10**n;
+          degree = n;
+        }
+        output = String(coefficient) + "e" + String(degree);
+      }
+      p.innerHTML = output;
     }
   }
-  // operations = [];
-  // num = "";
+  operations = [];
+  num = "";
 }
 
 function showList() {
