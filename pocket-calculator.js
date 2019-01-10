@@ -3,6 +3,7 @@ var calc = "";
 var operations = [];
 var answer = "";
 var num = "";
+var recall = false;
 
 function clearing() {
   let p = document.getElementById("output");
@@ -11,6 +12,7 @@ function clearing() {
   output = "";
   operations = [];
   num = "";
+  recall = false;
 }
 
 function negate() {
@@ -169,54 +171,72 @@ function buttonNum9() {
 }
 
 function decimal() {
-  let p = document.getElementById("output");
-  output = output + ".";
-  p.innerHTML = output;
-  num = num + ".";
+  if(num.length <= 8) {
+    let p = document.getElementById("output");
+    if(num === "" && output === "") {
+      output = output + "0";
+      num = num + "0";
+    }
+    output = output + ".";
+    p.innerHTML = output;
+    num = num + ".";
+  }
 }
 
 function add() {
   if(operations[operations.length - 1] === ("+" || "-" || "x" || "/")) {
     operations.splice(operations.length - 1, 1);
+  } else if(recall == true) {
+    operations.push(answer);
   } else {
     operations.push(num);
   }
   operations.push("+");
   num = "";
   output = "";
+  recall = false;
 }
 
 function subtract() {
   if(operations[operations.length - 1] === ("+" || "-" || "x" || "/")) {
     operations.splice(operations.length - 1, 1);
+  } else if(recall == true) {
+    operations.push(answer);
   } else {
     operations.push(num);
   }
   operations.push("-");
   num = "";
   output = "";
+  recall = false;
 }
 
 function multiply() {
   if(operations[operations.length - 1] === ("+" || "-" || "x" || "/")) {
     operations.splice(operations.length - 1, 1);
+  } else if(recall == true) {
+    operations.push(answer);
   } else {
     operations.push(num);
   }
   operations.push("x");
   num = "";
   output = "";
+  recall = false;
 }
 
 function divide() {
   if(operations[operations.length - 1] === ("+" || "-" || "x" || "/")) {
     operations.splice(operations.length - 1, 1);
+  } else if(recall == true) {
+    operations.push(answer);
   } else {
     operations.push(num);
   }
   operations.push("/");
   num = "";
   output = "";
+  recall = false;
 }
 
 function equals() {
@@ -269,9 +289,11 @@ function equals() {
   }
   operations = [];
   num = "";
+  output = "";
+  recall = true;
 }
 
 function showList() {
   console.log(operations);
-  console.log(calc);
+  console.log(output);
 }

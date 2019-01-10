@@ -12,6 +12,7 @@
   grid-gap: 10px 10px;
   background-color: blue;
   padding: 25px;
+  border-radius: 25px;
 }
 
 .display-bar {
