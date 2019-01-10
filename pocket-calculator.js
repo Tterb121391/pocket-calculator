@@ -2,7 +2,7 @@ var output = "";
 var calc = "";
 var operations = [];
 var answer = "";
-var num = "";
+var item = "";
 var recall = false;
 
 function clearing() {
@@ -11,16 +11,16 @@ function clearing() {
   answer = "";
   output = "";
   operations = [];
-  num = "";
+  item = "";
   recall = false;
 }
 
 function negate() {
   let p = document.getElementById("output");
-  if(Number.isNaN(Number(num)) == false) {
-    num = Number(num) * -1;
+  if(Number.isNaN(Number(item)) == false) {
+    item = Number(item) * -1;
     let lastChar = output[output.length - 1];
-    num = String(num);
+    item = String(item);
     for(let c = output.length; c > 0; c--) {
       if(lastChar === ("+" || "-" || "x" || "/")) {
         break;
@@ -29,17 +29,17 @@ function negate() {
         lastChar = output[c - 1];
       }
     }
-    output = output + num;
+    output = output + item;
     p.innerHTML = output;
   }
 }
 
 function percentage() {
   let p = document.getElementById("output");
-  if(Number.isNaN(Number(num)) == false) {
-    num = Number(num) * 0.01;
+  if(Number.isNaN(Number(item)) == false) {
+    item = Number(item) * 0.01;
     let lastChar = output[output.length - 1];
-    num = String(num);
+    item = String(item);
     for(let b = output.length; b > 0; b--) {
       if(lastChar === ("+" || "-" || "x" || "/")) {
         break;
@@ -48,7 +48,7 @@ function percentage() {
         lastChar = output[b - 1];
       }
     }
-    output = output + num;
+    output = output + item;
     p.innerHTML = output;
   }
 }
@@ -70,181 +70,93 @@ function commaDelimit() {
   }
 }
 
-function buttonNum0() {
-  if(num.length <= 8) {
+function digit(num) {
+  if(item.length <= 8) {
     let p = document.getElementById("output");
-    output = output + "0";
-    num = num + "0";
+    output = output + String(num);
+    item = item + String(num);
     commaDelimit();
     p.innerHTML = output;
   }
-}
-
-function buttonNum1() {
-  if(num.length <= 8) {
-    let p = document.getElementById("output");
-    output = output + "1";
-    num = num + "1";
-    commaDelimit();
-    p.innerHTML = output;
-  }
-}
-
-function buttonNum2() {
-  if(num.length <= 8) {
-    let p = document.getElementById("output");
-    output = output + "2";
-    num = num + "2";
-    commaDelimit();
-    p.innerHTML = output;
-  }
-}
-
-function buttonNum3() {
-  if(num.length <= 8) {
-    let p = document.getElementById("output");
-    output = output + "3";
-    num = num + "3";
-    commaDelimit();
-    p.innerHTML = output;
-  }
-}
-
-function buttonNum4() {
-  if(num.length <= 8) {
-    let p = document.getElementById("output");
-    output = output + "4";
-    num = num + "4";
-    commaDelimit();
-    p.innerHTML = output;
-  }
-}
-
-function buttonNum5() {
-  if(num.length <= 8) {
-    let p = document.getElementById("output");
-    output = output + "5";
-    num = num + "5";
-    commaDelimit();
-    p.innerHTML = output;
-  }
-}
-
-function buttonNum6() {
-  if(num.length <= 8) {
-    let p = document.getElementById("output");
-    output = output + "6";
-    num = num + "6";
-    commaDelimit();
-    p.innerHTML = output;
-  }
-}
-
-function buttonNum7() {
-  if(num.length <= 8) {
-    let p = document.getElementById("output");
-    output = output + "7";
-    num = num + "7";
-    commaDelimit();
-    p.innerHTML = output;
-  }
-}
-
-function buttonNum8() {
-  if(num.length <= 8) {
-    let p = document.getElementById("output");
-    output = output + "8";
-    num = num + "8";
-    commaDelimit();
-    p.innerHTML = output;
-  }
-}
-
-function buttonNum9() {
-  if(num.length <= 8) {
-    let p = document.getElementById("output");
-    output = output + "9";
-    num = num + "9";
-    commaDelimit();
-    p.innerHTML = output;
-  }
+  recall = false;
 }
 
 function decimal() {
-  if(num.length <= 8) {
+  if(item.length <= 8) {
     let p = document.getElementById("output");
-    if(num === "" && output === "") {
+    if(item === "" && output === "") {
       output = output + "0";
-      num = num + "0";
+      item = item + "0";
     }
     output = output + ".";
     p.innerHTML = output;
-    num = num + ".";
+    item = item + ".";
   }
+  recall = false;
 }
 
 function add() {
-  if(operations[operations.length - 1] === ("+" || "-" || "x" || "/")) {
+  if(operations[operations.length - 1] === "x" || operations[operations.length - 1] === "+" || operations[operations.length - 1] === "-" || operations[operations.length - 1] === "/") {
     operations.splice(operations.length - 1, 1);
   } else if(recall == true) {
     operations.push(answer);
   } else {
-    operations.push(num);
+    operations.push(item);
   }
   operations.push("+");
-  num = "";
+  item = "";
   output = "";
   recall = false;
 }
 
 function subtract() {
-  if(operations[operations.length - 1] === ("+" || "-" || "x" || "/")) {
+  if(operations[operations.length - 1] === "x" || operations[operations.length - 1] === "+" || operations[operations.length - 1] === "-" || operations[operations.length - 1] === "/") {
     operations.splice(operations.length - 1, 1);
   } else if(recall == true) {
     operations.push(answer);
   } else {
-    operations.push(num);
+    operations.push(item);
   }
   operations.push("-");
-  num = "";
+  item = "";
   output = "";
   recall = false;
 }
 
 function multiply() {
-  if(operations[operations.length - 1] === ("+" || "-" || "x" || "/")) {
+  if(operations[operations.length - 1] === "x" || operations[operations.length - 1] === "+" || operations[operations.length - 1] === "-" || operations[operations.length - 1] === "/") {
     operations.splice(operations.length - 1, 1);
   } else if(recall == true) {
     operations.push(answer);
   } else {
-    operations.push(num);
+    operations.push(item);
   }
   operations.push("x");
-  num = "";
+  item = "";
   output = "";
   recall = false;
 }
 
 function divide() {
-  if(operations[operations.length - 1] === ("+" || "-" || "x" || "/")) {
+  if(operations[operations.length - 1] === "x" || operations[operations.length - 1] === "+" || operations[operations.length - 1] === "-" || operations[operations.length - 1] === "/") {
     operations.splice(operations.length - 1, 1);
   } else if(recall == true) {
     operations.push(answer);
   } else {
-    operations.push(num);
+    operations.push(item);
   }
   operations.push("/");
-  num = "";
+  item = "";
   output = "";
   recall = false;
 }
 
 function equals() {
+  operations.push(item);
   let p = document.getElementById("output");
-  if(operations[operations.length - 1] === ("+" || "-" || "x" || "/")) {
+  if(operations[operations.length - 1] === "") {
     p.innerHTML = "Error";
   } else {
-    operations.push(num);
     for(let z = 0; z <= operations.length; z++) {
       if(operations[z] === "x") {
         operations.splice(z - 1, 0, Number(operations[z - 1]) * Number(operations[z + 1]));
@@ -288,7 +200,7 @@ function equals() {
     }
   }
   operations = [];
-  num = "";
+  item = "";
   output = "";
   recall = true;
 }

@@ -33,3 +33,7 @@
 #button-equals {
   grid-column: 3 / 5;
 }
+
+#name {
+  text-align: center;
+}
