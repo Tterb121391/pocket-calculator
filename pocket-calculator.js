@@ -39,35 +39,21 @@ function percentage() {
   if(Number.isNaN(Number(item)) == false) {
     item = Number(item) * 0.01;
     let lastChar = output[output.length - 1];
-    item = String(item);
-    for(let b = output.length; b > 0; b--) {
-      if(lastChar === ("+" || "-" || "x" || "/")) {
-        break;
-      } else {
-        output = output.slice(0, b - 2);
-        lastChar = output[b - 1];
-      }
-    }
-    output = output + item;
+    item = String(item.toPrecision(5));
+    output = item;
     p.innerHTML = output;
   }
 }
 
 function commaDelimit() {
-  let r;
-  for(r = 0; r < output.length; r++) {
+  for(let r = 0; r < output.length; r++) {
     if(output[r] === ",") {
       output = output.substring(0, r) + output.substring(r + 1);
       r--;
-    } else if(output[r] === ".") {
-        break;
     }
   }
-  if(r > 3) {
-    for(let s = r - 3; s > 0; s -= 3) {
-      output = output.substring(0, s) + "," + output.substring(s);
-    }
-  }
+  output = Number(output);
+  output = output.toLocaleString();
 }
 
 function digit(num) {
@@ -96,7 +82,7 @@ function decimal() {
 }
 
 function add() {
-  if(operations[operations.length - 1] === "x" || operations[operations.length - 1] === "+" || operations[operations.length - 1] === "-" || operations[operations.length - 1] === "/") {
+  if((operations[operations.length - 1] === "x" || operations[operations.length - 1] === "+" || operations[operations.length - 1] === "-" || operations[operations.length - 1] === "/") && item === "") {
     operations.splice(operations.length - 1, 1);
   } else if(recall == true) {
     operations.push(answer);
@@ -110,7 +96,7 @@ function add() {
 }
 
 function subtract() {
-  if(operations[operations.length - 1] === "x" || operations[operations.length - 1] === "+" || operations[operations.length - 1] === "-" || operations[operations.length - 1] === "/") {
+  if((operations[operations.length - 1] === "x" || operations[operations.length - 1] === "+" || operations[operations.length - 1] === "-" || operations[operations.length - 1] === "/") && item === "") {
     operations.splice(operations.length - 1, 1);
   } else if(recall == true) {
     operations.push(answer);
@@ -124,7 +110,7 @@ function subtract() {
 }
 
 function multiply() {
-  if(operations[operations.length - 1] === "x" || operations[operations.length - 1] === "+" || operations[operations.length - 1] === "-" || operations[operations.length - 1] === "/") {
+  if((operations[operations.length - 1] === "x" || operations[operations.length - 1] === "+" || operations[operations.length - 1] === "-" || operations[operations.length - 1] === "/") && item === "") {
     operations.splice(operations.length - 1, 1);
   } else if(recall == true) {
     operations.push(answer);
@@ -138,7 +124,7 @@ function multiply() {
 }
 
 function divide() {
-  if(operations[operations.length - 1] === "x" || operations[operations.length - 1] === "+" || operations[operations.length - 1] === "-" || operations[operations.length - 1] === "/") {
+  if((operations[operations.length - 1] === "x" || operations[operations.length - 1] === "+" || operations[operations.length - 1] === "-" || operations[operations.length - 1] === "/") && item === "") {
     operations.splice(operations.length - 1, 1);
   } else if(recall == true) {
     operations.push(answer);

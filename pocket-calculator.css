@@ -34,6 +34,10 @@
   grid-column: 3 / 5;
 }
 
+#button-equals:hover {
+  background-color: lightgreen;
+}
+
 #name {
   text-align: center;
 }
