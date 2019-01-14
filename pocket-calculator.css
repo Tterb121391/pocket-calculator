@@ -26,7 +26,7 @@
   padding: 10px;
 }
 
-#operator:hover {
+button[id*="operator"]:hover {
   background-color: orange;
 }
 
@@ -40,4 +40,17 @@
 
 #name {
   text-align: center;
+}
+
+button[id*="modifier"]:hover {
+  background-color: gold;
+}
+
+button[id*="button-num"]:hover {
+  background-color: lightcoral;
+}
+
+#button-clear:hover {
+  background-color: crimson;
+  color: white;
 }
