@@ -1,9 +1,9 @@
-var output = "";
-var calc = "";
-var operations = [];
-var answer = "";
-var item = "";
-var recall = false;
+let output = "";
+let calc = "";
+let operations = [];
+let answer = "";
+let item = "";
+let recall = false;
 
 function clearing() {
   let p = document.getElementById("output");
@@ -38,22 +38,29 @@ function percentage() {
   let p = document.getElementById("output");
   if(Number.isNaN(Number(item)) == false) {
     item = Number(item) * 0.01;
-    let lastChar = output[output.length - 1];
     item = String(item.toPrecision(5));
+    for(let a = item.length; item[a - 2] === "0"; a--) {
+      item = item.slice(0, a - 2);
+    }
     output = item;
     p.innerHTML = output;
+    console.log(item.length);
   }
 }
 
 function commaDelimit() {
-  for(let r = 0; r < output.length; r++) {
+  let r;
+  for(r = 0; r < output.length; r++) {
     if(output[r] === ",") {
       output = output.substring(0, r) + output.substring(r + 1);
       r--;
+    } else if(output[r] === ".") {
+      break;
     }
   }
-  output = Number(output);
-  output = output.toLocaleString();
+  for(let s = r - 3; s > 0; s = s -3) {
+    output = output.substring(0, s) + "," + output.substring(s);
+  }
 }
 
 function digit(num) {
