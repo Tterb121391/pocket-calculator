@@ -1,0 +1,5 @@
+limit number of deciaml points in one number
+change tolocalestring back to original
+delete zeros after doing toprecision
+change order of numbers on calculator
+add zero after placing a decimal point
