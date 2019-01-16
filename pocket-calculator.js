@@ -1,5 +1,4 @@
 let output = "";
-let calc = "";
 let operations = [];
 let answer = "";
 let item = "";
@@ -34,17 +33,33 @@ function negate() {
   }
 }
 
+function makePrecise() {
+  item = String(item.toPrecision(5));
+  let b;
+  for(b = 1; b < item.length; b++) {
+    if(item[item.length - b] === "e") {
+      break;
+    }
+  }
+  for(let a = item.length - b; item[a - 2] === "0"; a--) {
+    item = item.substring(0, a - 2) + item.substring(a - 1);
+  }
+}
+
 function percentage() {
   let p = document.getElementById("output");
   if(Number.isNaN(Number(item)) == false) {
     item = Number(item) * 0.01;
-    item = String(item.toPrecision(5));
-    for(let a = item.length; item[a - 2] === "0"; a--) {
-      item = item.slice(0, a - 2);
+    if(item > 0.000001) {
+      item = String(item.toPrecision(5));
+      for(let a = item.length; item[a - 2] === "0"; a--) {
+        item = item.slice(0, a - 2);
+      }
+    } else {
+      makePrecise();
     }
     output = item;
     p.innerHTML = output;
-    console.log(item.length);
   }
 }
 
@@ -75,7 +90,7 @@ function digit(num) {
 }
 
 function decimal() {
-  if(item.length <= 8) {
+  if(item.length <= 8 && output.indexOf(".") == -1) {
     let p = document.getElementById("output");
     if(item === "" && output === "") {
       output = output + "0";
@@ -172,15 +187,15 @@ function equals() {
         a--;
       }
     }
-    calc = operations[0];
-    if(Number.isNaN(calc) == true || calc === Infinity) {
+    item = operations[0];
+    if(Number.isNaN(item) == true || item === Infinity) {
       p.innerHTML = "Error";
     } else {
-      answer = calc;
+      answer = item;
       output = String(answer);
-      if(answer < 1000000000) {
+      if(answer < 1000000000 && answer > 0.000001) {
         commaDelimit();
-      } else {
+      } else if(answer > 1000000000) {
         let coefficient = 0;
         let degree;
         for(let n = 9; coefficient < 1 || coefficient >= 10; n++) {
@@ -188,6 +203,8 @@ function equals() {
           degree = n;
         }
         output = String(coefficient.toFixed(5)) + "e" + String(degree);
+      } else {
+        makePrecise();
       }
       p.innerHTML = output;
     }
