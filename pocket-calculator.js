@@ -3,6 +3,7 @@ let operations = [];
 let answer = "";
 let item = "";
 let recall = false;
+let zeroing = false;
 
 function clearing() {
   let p = document.getElementById("output");
@@ -15,21 +16,23 @@ function clearing() {
 }
 
 function negate() {
-  let p = document.getElementById("output");
-  if(Number.isNaN(Number(item)) == false) {
-    item = Number(item) * -1;
-    let lastChar = output[output.length - 1];
-    item = String(item);
-    for(let c = output.length; c > 0; c--) {
-      if(lastChar === ("+" || "-" || "x" || "/")) {
-        break;
-      } else {
-        output = output.slice(0, c - 2);
-        lastChar = output[c - 1];
+  if((operations[operations.length - 1] !== "x" && operations[operations.length - 1] !== "+" && operations[operations.length - 1] !== "-" && operations[operations.length - 1] !== "/")) {
+    let p = document.getElementById("output");
+    if(Number.isNaN(Number(item)) == false) {
+      item = Number(item) * -1;
+      let lastChar = output[output.length - 1];
+      item = String(item);
+      for(let c = output.length; c > 0; c--) {
+        if(lastChar === ("+" || "-" || "x" || "/")) {
+          break;
+        } else {
+          output = output.slice(0, c - 2);
+          lastChar = output[c - 1];
+        }
       }
+      output = output + item;
+      p.innerHTML = output;
     }
-    output = output + item;
-    p.innerHTML = output;
   }
 }
 
@@ -47,19 +50,21 @@ function makePrecise() {
 }
 
 function percentage() {
-  let p = document.getElementById("output");
-  if(Number.isNaN(Number(item)) == false) {
-    item = Number(item) * 0.01;
-    if(item > 0.000001) {
-      item = String(item.toPrecision(5));
-      for(let a = item.length; item[a - 2] === "0"; a--) {
-        item = item.slice(0, a - 2);
+  if((operations[operations.length - 1] !== "x" && operations[operations.length - 1] !== "+" && operations[operations.length - 1] !== "-" && operations[operations.length - 1] !== "/")) {
+    let p = document.getElementById("output");
+    if(Number.isNaN(Number(item)) == false) {
+      item = Number(item) * 0.01;
+      if(item > 0.000001) {
+        item = String(item.toPrecision(5));
+        for(let a = item.length; item[a - 2] === "0"; a--) {
+          item = item.slice(0, a - 2);
+        }
+      } else {
+        makePrecise();
       }
-    } else {
-      makePrecise();
+      output = item;
+      p.innerHTML = output;
     }
-    output = item;
-    p.innerHTML = output;
   }
 }
 
@@ -79,6 +84,10 @@ function commaDelimit() {
 }
 
 function digit(num) {
+  if(zeroing == true) {
+    output = output.slice(0, output.length - 1);
+    zeroing = false;
+  }
   if(item.length <= 8) {
     let p = document.getElementById("output");
     output = output + String(num);
@@ -96,14 +105,15 @@ function decimal() {
       output = output + "0";
       item = item + "0";
     }
-    output = output + ".";
-    p.innerHTML = output;
+    output = output + ".0";
     item = item + ".";
+    zeroing = true;
+    p.innerHTML = output;
   }
   recall = false;
 }
 
-function add() {
+function chooseOperator(operator) {
   if((operations[operations.length - 1] === "x" || operations[operations.length - 1] === "+" || operations[operations.length - 1] === "-" || operations[operations.length - 1] === "/") && item === "") {
     operations.splice(operations.length - 1, 1);
   } else if(recall == true) {
@@ -111,49 +121,15 @@ function add() {
   } else {
     operations.push(item);
   }
-  operations.push("+");
-  item = "";
-  output = "";
-  recall = false;
-}
-
-function subtract() {
-  if((operations[operations.length - 1] === "x" || operations[operations.length - 1] === "+" || operations[operations.length - 1] === "-" || operations[operations.length - 1] === "/") && item === "") {
-    operations.splice(operations.length - 1, 1);
-  } else if(recall == true) {
-    operations.push(answer);
-  } else {
-    operations.push(item);
+  if(operator.id === "operator-add") {
+    operations.push("+");
+  } else if (operator.id === "operator-subtract") {
+    operations.push("-");
+  } else if (operator.id === "operator-multiply") {
+    operations.push("x");
+  } else if (operator.id === "operator-divide") {
+    operations.push("/");
   }
-  operations.push("-");
-  item = "";
-  output = "";
-  recall = false;
-}
-
-function multiply() {
-  if((operations[operations.length - 1] === "x" || operations[operations.length - 1] === "+" || operations[operations.length - 1] === "-" || operations[operations.length - 1] === "/") && item === "") {
-    operations.splice(operations.length - 1, 1);
-  } else if(recall == true) {
-    operations.push(answer);
-  } else {
-    operations.push(item);
-  }
-  operations.push("x");
-  item = "";
-  output = "";
-  recall = false;
-}
-
-function divide() {
-  if((operations[operations.length - 1] === "x" || operations[operations.length - 1] === "+" || operations[operations.length - 1] === "-" || operations[operations.length - 1] === "/") && item === "") {
-    operations.splice(operations.length - 1, 1);
-  } else if(recall == true) {
-    operations.push(answer);
-  } else {
-    operations.push(item);
-  }
-  operations.push("/");
   item = "";
   output = "";
   recall = false;
@@ -192,10 +168,7 @@ function equals() {
       p.innerHTML = "Error";
     } else {
       answer = item;
-      output = String(answer);
-      if(answer < 1000000000 && answer > 0.000001) {
-        commaDelimit();
-      } else if(answer > 1000000000) {
+      if(answer >= 1000000000) {
         let coefficient = 0;
         let degree;
         for(let n = 9; coefficient < 1 || coefficient >= 10; n++) {
@@ -203,9 +176,12 @@ function equals() {
           degree = n;
         }
         output = String(coefficient.toFixed(5)) + "e" + String(degree);
-      } else {
+        makePrecise();
+      } else if(answer <= 0.000001) {
         makePrecise();
       }
+      output = String(item);
+      commaDelimit();
       p.innerHTML = output;
     }
   }
