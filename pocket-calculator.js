@@ -38,8 +38,7 @@ function negate() {
 
 function makePrecise() {
   item = String(item.toPrecision(5));
-  let b;
-  for(b = 1; b < item.length; b++) {
+  for(var b = 1; b < item.length; b++) {
     if(item[item.length - b] === "e") {
       break;
     }
@@ -69,8 +68,7 @@ function percentage() {
 }
 
 function commaDelimit() {
-  let r;
-  for(r = 0; r < output.length; r++) {
+  for(var r = 0; r < output.length; r++) {
     if(output[r] === ",") {
       output = output.substring(0, r) + output.substring(r + 1);
       r--;
@@ -170,18 +168,24 @@ function equals() {
       answer = item;
       if(answer >= 1000000000) {
         let coefficient = 0;
-        let degree;
-        for(let n = 9; coefficient < 1 || coefficient >= 10; n++) {
-          coefficient = answer / 10**n;
-          degree = n;
+        for(var degree = 9; coefficient < 1 || coefficient >= 10; degree++) {
+          coefficient = answer / 10**degree;
         }
         output = String(coefficient.toFixed(5)) + "e" + String(degree);
         makePrecise();
+        output = String(item);
       } else if(answer <= 0.000001) {
+        item = Number(item);
         makePrecise();
+        output = String(item);
+      } else {
+        item = Number(item);
+        output = String(item.toPrecision(9));
+        for(let a = output.length - 1; output[a - 2] === "0"; a--) {
+          output = output.slice(0, a - 2);
+        }
+        commaDelimit();
       }
-      output = String(item);
-      commaDelimit();
       p.innerHTML = output;
     }
   }
@@ -189,9 +193,4 @@ function equals() {
   item = "";
   output = "";
   recall = true;
-}
-
-function showList() {
-  console.log(operations);
-  console.log(output);
 }
